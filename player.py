@@ -1,7 +1,16 @@
+import pymongo as pm
+
 class Player:
-    def __init__(self, name, num):
-        self.name = name
-        self.num = num
+    def __init__(self, num):
+        hostName = 'localhost' 
+        dbPort = 27017 
+        client = pm.MongoClient("mongodb://%s:%s" % (hostName, dbPort))
+        db = client["database"]
+        users = db["users"]
+        user = users.find(num, )
+        self.num = user
+        self.name =   
+
         self.owns = {
             "money":    10,
             "sur1":     0,

@@ -109,7 +109,7 @@
           let body = {};
           body.name = document.getElementById("nickname").value;
           body.passwd = document.getElementById("password").value;
-          body.mail = document.getElementById("password").value;
+          body.mail = document.getElementById("email").value;
           let url = host + '/registerNewUser';
           let obj = fetchPost(body, url);
           let waittime = 0;

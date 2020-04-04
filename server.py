@@ -5,8 +5,6 @@ import data
 import decode
 #import ssl
 
-hostName = 'localhost'
-serverPort = 8080
 
 class Kramakar(BaseHTTPRequestHandler):
     def do_GET(self):
@@ -28,8 +26,9 @@ class Kramakar(BaseHTTPRequestHandler):
         response.write(body)
         self.wfile.write(response.getvalue())
         
-if __name__ == "__main__":
-    data.run()
+def run():
+    hostName = 'localhost'
+    serverPort = 8080
     httpd = HTTPServer((hostName, serverPort), Kramakar)
     print("Server started http://%s:%s" % (hostName, serverPort))
     try:
