@@ -1,16 +1,18 @@
 import pymongo as pm
 
 class Player:
-    def __init__(self, num):
-        hostName = 'localhost' 
-        dbPort = 27017 
-        client = pm.MongoClient("mongodb://%s:%s" % (hostName, dbPort))
-        db = client["database"]
-        users = db["users"]
-        user = users.find(num, )
-        self.num = user
-        self.name =   
 
+    def __init__(self, name, passwd):
+        self.__hostName = 'localhost' 
+        self.__dbPort = 27017 
+        self.__client = pm.MongoClient("mongodb://%s:%s" % (self.__hostName, self.__dbPort))
+        self.__db = self.__client["database"]
+        self.__users = self.__db["users"]
+        if(self.__users.find( {"name" : self.name} )):
+            raise ValueError('{"code": 0, "msg": "Player already exists."}')
+            break
+        self.name = name
+        self.passwd = passwd #hash!!
         self.owns = {
             "money":    10,
             "sur1":     0,
@@ -29,6 +31,7 @@ class Player:
             "sur1":     0,
             "sur2":     10
         }
+        
 
     def buy(self):
         for x in self.toBuy: 

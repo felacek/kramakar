@@ -1,8 +1,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import time
 from io import BytesIO
-import data
-import decode
+import controller
 #import ssl
 
 
@@ -18,17 +17,15 @@ class Kramakar(BaseHTTPRequestHandler):
     def do_POST(self):
         content_length = int(self.headers['Content-Length'])
         body = self.rfile.read(content_length)
+        print(self.path, body)
+        res = controller.decode(self.path, body)
         self.send_response(200)
         self.end_headers()
         response = BytesIO()
-        response.write(b'This is a POST request. ')
-        response.write(b'Received: ')
-        response.write(body)
+        response.write(str.encode(res))
         self.wfile.write(response.getvalue())
         
-def run():
-    hostName = 'localhost'
-    serverPort = 8080
+def run(hostName, serverPort):
     httpd = HTTPServer((hostName, serverPort), Kramakar)
     print("Server started http://%s:%s" % (hostName, serverPort))
     try:

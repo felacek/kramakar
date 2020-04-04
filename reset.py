@@ -9,4 +9,4 @@ def run():
     users.delete_many({})
     things.delete_many({})
 
-exec()
+run()
