@@ -1,21 +1,157 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>KráMaKar</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
-    </head>
-    <body>
-        <!--[if lt IE 7]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-        
-        <script src="" async defer></script>
-    </body>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Bozi matematicka soutez</title>
+  <script>
+      let user = "";
+      let host = "";
+      let player = {name: "host", token: "1", owns: {factoryI: {}, }buy: {}, sell: {}};
+      //Zpet
+      let backOnMainPage = '<br> Zpet na hlavni vyber <input type = "button" onclick = "loadMainPage()">';
+      // zobrazitelne stranky
+      // Prihlaseni
+      let logPage = '<h1> Vítej na naší stránce </h1><br>';
+      logPage = logPage + '<h2>Prihlaseni</h2>';
+      logPage = logPage + '<br>Nickname: <input type= "text" id = "nickname"></br>';
+      logPage = logPage + '<br>Password: <input type= "text" id = "password"></br>';
+      logPage = logPage + '<br>Prihlas se: <input type= "button" onclick="logIn()"></br>';
+      logPage = logPage + '<h3>Nejsem za registrovan <input type = "button" onclick="loadRegisterPage()"> </h3>';
+      // Registrace
+      let registerPage = '<h1>REGISTRACE</h1>';
+      registerPage = registerPage + '<br>Nickname: <input type= "text" id = "nickname"></br>';
+      registerPage = registerPage + '<br>Password: <input type= "text" id = "passwordx"></br>';
+      registerPage = registerPage + '<br>Repeat password: <input type= "text" id = "passwordy"></br>';
+      registerPage = registerPage + '<br>Mail: <input type= "text" id = "mail"></br>';
+      registerPage = registerPage + '<h3>Registrace <input type = "button" onclick="registerNewUser()"> </h3>';
+      registerPage = registerPage + '<h3>Vratit se k prihlaseni <input type = "button" onclick="loadLogPage()"> </h3>';
+
+
+      // Main page
+      let mainPage = '<h1>Prihlasen <a id = "userMainPage"></a></h1>';
+      mainPage = mainPage + '<br>Market <input type = "button" onclick="loadMarketPage()">';
+      mainPage = mainPage + '<br>Ulohy <input type = "button" onclick="loadQuestPage()">';
+      mainPage = mainPage + '<br>Vysledovka <input type = "button" onclick="loadResultsPage()">';
+      mainPage = mainPage + '<br>Odhlasit se <input type = "button" onclick="logOut()">';
+      // Zadání
+      let questPage = '<h1>Zadani bozich uloh </h1>';
+      questPage = questPage + '<div id="quest"></div>';
+      questPage = questPage + backOnMainPage;
+      //Vysledovka
+      let resultsPage = '<h1>Poradi</h1>';
+      resultsPage = resultsPage + backOnMainPage;
+      //Market
+      let marketPage = '<h1>Market</h1>';
+      marketPage = marketPage + '<div id="mainTableMarket">';
+      marketPage = marketPage + backOnMainPage;
+
+      // Funkce
+      function loadMarketPage() {
+          document.getElementById("page").innerHTML = marketPage;
+          // nacte stranku
+          loadMainTableMarket();
+          // nacte tabulku
+      }
+
+      function loadQuestPage() {
+          document.getElementById("page").innerHTML = questPage
+      }
+
+      function loadResultsPage() {
+          document.getElementById("page").innerHTML = resultsPage
+      }
+
+      function loadAll() {
+          loadLogPage()
+      }
+
+      function loadMainTableMarket() {
+          let obj = {};
+          obj.coal = {id: '3', name: 'sur3', price: '10000000', buyable: false};
+          let s = `<table style="width:100%"> <tr> <th> Surovina</th> <th> Cena na trhu </th> <th> Sklad </th> <th>Nakup</th> <th>Zmena nakupu</th> </tr>`;
+          for (o of Object.keys(obj)){
+              let k = obj[o];
+              s += `<tr> <th>` + k.name + `</a></span></th><th>` + k.price + `</th> <th>` + `potreba propojit e` + `</th> <th> neni</th> <th><input type = 'text' id = "JavaScript: k.id"  name = "ahoj"></th></tr>`;
+          }
+          s += `</table>`;
+          document.getElementById("mainTableMarket").innerHTML = s
+      }
+
+
+      function loadLogPage() {
+          document.getElementById("page").innerHTML = logPage
+      }
+
+      function logIn() {
+          let body = {};
+          body.name = document.getElementById("nickname").value;
+          body.passwd = document.getElementById("password").value;
+          if (body.name === "host") {
+              user = "host"
+
+          } else {
+              let obj = fetchPost(body, url);
+          }
+          if (user !== "") {
+              loadMainPage()
+
+          } else {
+              alert("kamo, jsi vedle")
+          }
+
+      }
+
+      function loadRegisterPage() {
+          document.getElementById("page").innerHTML = registerPage
+      }
+
+      function registerNewUser() {
+          let body = {};
+          body.name = document.getElementById("nickname").value;
+          body.passwd = document.getElementById("password").value;
+          body.mail = document.getElementById("password").value;
+          let url = host + '/registerNewUser';
+          let obj = fetchPost(body, url);
+          let waittime = 0;
+          while (obj === 'undefined') {
+              console.log("Registrace zapocata");
+              console.log(waittime);
+              waittime++
+          }
+          if (obj.ansver == 'Error') {
+              alert('ouvej zkus to znova')
+          } else {
+              alert('jsi zaregistrovan')
+          }
+      }
+
+      function loadMainPage() {
+          document.getElementById("page").innerHTML = mainPage;
+          document.getElementById("userMainPage").innerHTML = user;
+      }
+
+      function logOut() {
+          user = '';
+          document.getElementById("page").innerHTML = logPage;
+          alert("vrat se brzy")
+      }
+
+      // Fetche
+      // fetchPost resi postovani
+      function fetchPost(body, url) {
+          let options = {};
+          options.method = "POST";
+          options.body = JSON.stringify(body);
+          fetch(url, options).then(function (response) {
+              response.text().then(function (text) {
+                  let returningObject = JSON.parse(text);
+                  return returningObject
+              })
+          })
+      }
+  </script>
+</head>
+<body onload="loadAll()">
+<div id="page"></div>
+</body>
 </html>
