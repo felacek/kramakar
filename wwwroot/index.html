@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <title>Bozi matematicka soutez</title>
-  <script>
-      let user = "";
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+      user = "";
       let token = "";
       let objFetch = {};
       const HOST = window.location.protocol + "//" + window.location.hostname + ((window.location.port) ? ":" + window.location.port : "");
-      let player = {name: "host", token: "1", owns: {obj: {id:3, number: 1000, type: "factory"}}, buy: {}, sell: {}};
+      let player = {name: "host", token: "1", owns: {obj: {id: 3, number: 1000, type: "factory"}}, buy: {}, sell: {}};
       //Zpet
       let backOnMainPage = '<br> <input type = "button" onclick = "loadMainPage()" value="Zpet na hlavni vyber ">';
       // zobrazitelne stranky
@@ -67,18 +68,20 @@
       function loadAll() {
           loadLogPage()
       }
-      function zmenObjednavku (){
+
+      function zmenObjednavku() {
           console.log(document.getElementById('3').value);
           document.getElementById('3divMainMarketTableNakup').innerHTML = document.getElementById('3').value;
       }
+
       function loadMainTableMarket() {
           //let obj = fetchPost (0,'/mainTableMarket');
           let obj = {};
           obj.coal = {id: '3', name: 'sur3', price: '10000000', buyable: false};
           let s = `<table style="width:100%"> <tr> <th> Surovina</th> <th> Cena na trhu </th> <th> Sklad </th> <th>Nakup</th> <th>Zmena nakupu</th> </tr>`;
-          for (o of Object.keys(obj)){
+          for (o of Object.keys(obj)) {
               let k = obj[o];
-              s += `<tr> <th>` + k.name + `</a></span></th><th>` + k.price + `</th> <th><div>Loading</div></th> <th><div id ='`+ k.id +`divMainMarketTableNakup` +`'></div></th> <th><input type = 'text' id ='` + k.id + `'></th></tr>`;
+              s += `<tr> <th>` + k.name + `</a></span></th><th>` + k.price + `</th> <th><div>Loading</div></th> <th><div id ='` + k.id + `divMainMarketTableNakup` + `'></div></th> <th><input type = 'text' id ='` + k.id + `'></th></tr>`;
           }
           s += `</table>`;
           document.getElementById("mainTableMarket").innerHTML = s
@@ -104,7 +107,8 @@
                   console.log("Registrace zapocata");
                   console.log(waittime);
                   waittime++
-              };
+              }
+              ;
               user = obj.name;
               token = obj.token;
               player = obj.player;
@@ -128,15 +132,15 @@
           body.name = document.getElementById("nickname").value;
           body.passwd = document.getElementById("passwordx").value;
           //if (body.passw  document.getElementById("passwordy").value;
-          let url = '/registerNewUser';
-          fetchPost(body, url).then(function (){
-          if (obj.kod == '0') {
-              alert('ouvej zkus to znova')
-          } else {
-              alert('jsi zaregistrovan')
-          }
-          objFetch={}
-      })}
+          let URL = HOST + '/registerNewUser';
+          $.post(URL,body, function (){
+              if (obj.kod == '0') {
+                  alert('ouvej zkus to znova')
+              } else {
+                  alert('jsi zaregistrovan')
+              }
+          } )
+      }
 
       function loadMainPage() {
           document.getElementById("page").innerHTML = mainPage;
@@ -152,7 +156,7 @@
           alert("vrat se brzy");
           let body = {};
           body.token = tokenSave;
-          fetchPost(body,'/logout');
+          fetchPost(body, '/logout');
           token = '0';
       }
 
@@ -160,7 +164,7 @@
       // Fetche
       // fetchPost resi postovani
       function fetchPost(body, url) {
-          url = HOST + url ;
+          url = HOST + url;
           let options = {};
           options.method = "POST";
           options.body = JSON.stringify(body);
@@ -169,6 +173,12 @@
                   objFetch = JSON.parse(text);
               })
           })
+      }
+
+      if (typeof fetchPost() == "function") {
+          console.log("true")
+      } else {
+          console.log("lol")
       }
   </script>
 </head>
