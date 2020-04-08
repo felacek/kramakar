@@ -6,6 +6,7 @@
   <script>
       let user = "";
       let token = "";
+      let objFetch = {};
       const HOST = window.location.protocol + "//" + window.location.hostname + ((window.location.port) ? ":" + window.location.port : "");
       let player = {name: "host", token: "1", owns: {obj: {id:3, number: 1000, type: "factory"}}, buy: {}, sell: {}};
       //Zpet
@@ -122,23 +123,20 @@
       }
 
       function registerNewUser() {
+          objFetch = {};
           let body = {};
           body.name = document.getElementById("nickname").value;
           body.passwd = document.getElementById("password").value;
           body.mail = document.getElementById("password").value;
           let url = '/registerNewUser';
-          let obj = fetchPost(body, url);
+          fetchPost(body, url);
           let waittime = 0;
-          while (obj === 'undefined') {
-              console.log("Registrace zapocata");
-              console.log(waittime);
-              waittime++
-          }
           if (obj.ansver == 'Error') {
               alert('ouvej zkus to znova')
           } else {
               alert('jsi zaregistrovan')
           }
+          objFetch={}
       }
 
       function loadMainPage() {
@@ -163,14 +161,13 @@
       // Fetche
       // fetchPost resi postovani
       function fetchPost(body, url) {
-          url = HOST + url;
+          url = HOST + url ;
           let options = {};
           options.method = "POST";
           options.body = JSON.stringify(body);
           fetch(url, options).then(function (response) {
               response.text().then(function (text) {
-                  let returningObject = JSON.parse(text);
-                  return returningObject
+                  objFetch = JSON.parse(text);
               })
           })
       }
