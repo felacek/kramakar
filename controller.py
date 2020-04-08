@@ -1,6 +1,7 @@
 import player
 import thing
 import json
+import secrets
 from collections import namedtuple
 
 def parse(data):
@@ -11,9 +12,16 @@ def parse(data):
 
 def decode(path, body):
     data = parse(body)
+    res = {"code": 0, "msg": ""}
     if(path == '/registerNewUser'):
         try:
             pl = player.Player(data["name"], data["passwd"])
-            return '{"code": 1, "msg": "Registration successful."}'
+            res["code"]=1
+            res["msg"]="Registration successful."
+            res["name"]=pl.name
+            res["owns"]=pl.owns
+            res["token"]=pl.token
         except ValueError as e:
-            return e.args
+            res["code"]=0
+            res["msg"]=e.args
+    return json.dumps(res)

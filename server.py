@@ -21,9 +21,8 @@ class Kramakar(BaseHTTPRequestHandler):
         res = controller.decode(self.path, body)
         self.send_response(200)
         self.end_headers()
-        response = BytesIO()
-        response.write(str.encode(res))
-        self.wfile.write(response.getvalue())
+        print(res)
+        self.wfile.write(bytes(res, "utf-8"))
         
 def run(hostName, serverPort):
     httpd = HTTPServer((hostName, serverPort), Kramakar)

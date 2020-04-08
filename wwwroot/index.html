@@ -25,7 +25,7 @@
       registerPage += '<br>Confirm password: <input type= "text" id = "passwordy"></br>';
       registerPage = registerPage + '<h3>Registrace <input type = "button" onclick="registerNewUser()"> </h3>';
       registerPage = registerPage + '<h3>Vratit se k prihlaseni <input type = "button" onclick="loadLogPage()"> </h3>';
-
+      registerPage += '<br><p id="msg"></p>'
 
       // Main page
       let mainPage = '<h1>Prihlasen <a id = "userMainPage"></a></h1>';
@@ -111,16 +111,18 @@
           body.passwd = document.getElementById("passwordy").value; // dodelat checkPass(passx, passy)
           let url = host + '/registerNewUser';
           let obj = fetchPost(body, url);
+
           let waittime = 0;
           while (obj === 'undefined') {
               console.log("Registrace zapocata");
               console.log(waittime);
               waittime++
           }
-          if (obj.ansver == 'Error') {
-              alert('ouvej zkus to znova')
-          } else {
-              alert('jsi zaregistrovan')
+          document.getElementById("msg").value = obj.msg;
+          if (obj.code == 0) {
+              alert(obj.msg)
+          } else if (obj.code == 1) {
+              alert(obj.msg)
           }
       }
 

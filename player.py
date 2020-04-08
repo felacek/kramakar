@@ -1,4 +1,5 @@
 import pymongo as pm
+import secrets
 
 class Player:
 
@@ -8,10 +9,10 @@ class Player:
         self.__client = pm.MongoClient("mongodb://%s:%s" % (self.__hostName, self.__dbPort))
         self.__db = self.__client["database"]
         self.__users = self.__db["users"]
-        if(self.__users.find( {"name" : self.name} )):
-            raise ValueError('{"code": 0, "msg": "Player already exists."}')
-            break
         self.name = name
+        if(self.__users.find( {"name" : self.name} )):
+            raise ValueError('Player already exists.')
+            return
         self.passwd = passwd #hash!!
         self.owns = {
             "money":    10,
@@ -31,7 +32,9 @@ class Player:
             "sur1":     0,
             "sur2":     10
         }
-        
+        self.token = secrets.token_urlsafe(20)
+        add = self.__users.insert_one({"name": self.name, "passwd": self.passwd, "owns": self.owns, "buy": self.toBuy, "sell": self.toSell, "token": self.token})
+        # add function to register, leave init only to create variable
 
     def buy(self):
         for x in self.toBuy: 
