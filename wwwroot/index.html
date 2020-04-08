@@ -126,12 +126,11 @@
           objFetch = {};
           let body = {};
           body.name = document.getElementById("nickname").value;
-          body.passwd = document.getElementById("password").value;
-          body.mail = document.getElementById("password").value;
+          body.passwd = document.getElementById("passwordy").value;
           let url = '/registerNewUser';
           fetchPost(body, url);
           let waittime = 0;
-          if (obj.ansver == 'Error') {
+          if (obj.code == 0) {
               alert('ouvej zkus to znova')
           } else {
               alert('jsi zaregistrovan')
