@@ -126,17 +126,17 @@
           objFetch = {};
           let body = {};
           body.name = document.getElementById("nickname").value;
-          body.passwd = document.getElementById("passwordy").value;
+          body.passwd = document.getElementById("passwordx").value;
+          //if (body.passw  document.getElementById("passwordy").value;
           let url = '/registerNewUser';
-          fetchPost(body, url);
-          let waittime = 0;
-          if (obj.code == 0) {
+          fetchPost(body, url).then(function (){
+          if (obj.kod == '0') {
               alert('ouvej zkus to znova')
           } else {
               alert('jsi zaregistrovan')
           }
           objFetch={}
-      }
+      })}
 
       function loadMainPage() {
           document.getElementById("page").innerHTML = mainPage;
