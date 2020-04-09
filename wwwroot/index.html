@@ -21,11 +21,10 @@
       logPage = logPage + '<br><input type= "button" onclick="logIn()" value="Prihlas se"></br>';
       logPage = logPage + '<h3><input type = "button" onclick="loadRegisterPage()" value = "Nejsem za registrovan "> </h3>';
       // Registrace
-      let registerPage = '<h1>REGISTRACE</h1>';
+      let registerPage = '<h1>Registrace</h1>';
       registerPage = registerPage + '<br><input type= "text" id = "nickname" value="Nickname"</br>';
       registerPage = registerPage + '<br><input type= "text" id = "passwordx" value = "Password"></br>';
       registerPage = registerPage + '<br><input type= "text" id = "passwordy" value = "Repeat password"></br>';
-      registerPage = registerPage + '<br><input type= "text" id = "mail" value="Mail"></br>';
       registerPage = registerPage + '<h3><input type = "button" onclick="registerNewUser()" value="Registrace"> </h3>';
       registerPage = registerPage + '<h3><input type = "button" onclick="loadLogPage()" value="Vratit se k prihlaseni"> </h3>';
 
@@ -123,7 +122,7 @@
       }
 
       function loadRegisterPage() {
-          document.getElementById("page").innerHTML = registerPage
+          document.getElementById("page").innerHTML = registerPage;
       }
 
       function registerNewUser() {
