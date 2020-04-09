@@ -9,7 +9,7 @@ class Player:
         self.__client = pm.MongoClient("mongodb://%s:%s" % (self.__hostName, self.__dbPort))
         self.__db = self.__client["database"]
         self.__users = self.__db["users"]
-        if(self.__users.find_one( {"name" : name} ))):
+        if(self.__users.find_one( {"name" : name} )):
             raise ValueError('Player already exists.')
             return
         self.name = name
