@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <title>Bozi matematicka soutez</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+        user = "";
+        let token = "";
+        let objFetch = {};
+        const HOST = window.location.protocol + "//" + window.location.hostname + ((window.location.port) ? ":" + window.location.port : "");
+        let player = {name: "host", token: "1", owns: {obj: {id: 3, number: 1000, type: "factory"}}, buy: {}, sell: {}};
+        //Zpet
+        let backOnMainPage = '<br> <input type = "button" onclick = "loadMainPage()" value="Zpet na hlavni vyber ">';
+        // zobrazitelne stranky
+        // Registrace
+        // Funkce
+
+        function loadAll() {
+            loadLogPage();
+        }
+
+        function zmenObjednavku() {
+            console.log(document.getElementById('3').value);
+            document.getElementById('3divMainMarketTableNakup').innerHTML = document.getElementById('3').value;
+        }
+
+        function loadMainTableMarket() {
+            //let obj = fetchPost (0,'/mainTableMarket');
+            let obj = {};
+            obj.coal = {id: '3', name: 'sur3', price: '10000000', buyable: false};
+            let s = `<table style="width:100%"> <tr> <th> Surovina</th> <th> Cena na trhu </th> <th> Sklad </th> <th>Nakup</th> <th>Zmena nakupu</th> </tr>`;
+            for (o of Object.keys(obj)) {
+                let k = obj[o];
+                s += `<tr> <th>` + k.name + `</a></span></th><th>` + k.price + `</th> <th><div>Loading</div></th> <th><div id ='` + k.id + `divMainMarketTableNakup` + `'></div></th> <th><input type = 'text' id ='` + k.id + `'></th></tr>`;
+            }
+            s += `</table>`;
+            document.getElementById("mainTableMarket").innerHTML = s
+        }
+
+
+        function loadLogPage() {
+            document.getElementById("logPage").style.display = "block";
+            document.getElementById("registerPage").style.display = "none";
+            document.getElementById("container").style.display = "none";
+        }
+
+        function logIn() {
+            let body = {};
+            body.name = document.getElementById("nickname").value;
+            body.passwd = document.getElementById("password").value;
+            if (body.name === "host") {
+                user = "host";
+                token = "host1"
+
+            } else {
+                document.getElementById("password").value = "";
+                let obj = fetchPost(body, '/logIn');
+                let waittime = 0;
+                while (obj === 'undefined') {
+                    console.log("Registrace zapocata");
+                    console.log(waittime);
+                    waittime++
+                }
+                ;
+                user = obj.name;
+                token = obj.token;
+                player = obj.player;
+            }
+            if (user !== "") {
+                loadMainPage()
+
+            } else {
+                alert("kamo, jsi vedle")
+            }
+
+        }
+
+        function loadRegisterPage() {
+            document.getElementById("registerPage").style.display = "block";
+            document.getElementById("logPage").style.display = "none";
+        }
+
+        function registerNewUser() {
+            objFetch = {};
+            let body = {};
+            body.name = document.getElementById("nicknameR").value;
+            body.passwd = document.getElementById("passwordx").value;
+            if (body.passwd = document.getElementById("passwordy").value) {
+                let dat = JSON.stringify(body);
+                //if (body.passw  document.getElementById("passwordy").value;
+                let URL = HOST + '/registerNewUser';
+                $.post(URL, dat, function (res) {
+                    let obj = JSON.parse(res);
+                    if (obj.code == 0) {
+                        alert('ouvej zkus to znova');
+                    } else {
+                        alert('jsi zaregistrovan');
+                    }
+                    alert(obj.msg);
+                })
+            }
+            else {
+                alert("zkus zadat stejne heslo, demente")
+            }
+        }
+
+        function loadMainPage() {
+            document.getElementById("container").style.display = "block";
+            document.getElementById("userMainPage").innerHTML = user;
+            document.getElementById("logPage").style.display = "none";
+            document.getElementById("poradi").style.diplay = "none";
+            document.getElementById("ulohy").style.display = "none";
+            document.getElementById("pravidla").style.display = "none";
+            document.getElementById("market").style.display = "none"
+        }
+
+        function logOut() {
+            user = '';
+            let tokenSave = token;
+            token = '0';
+            loadLogPage();
+            alert("vrat se brzy");
+            let body = {};
+            body.token = tokenSave;
+            fetchPost(body, '/logout');
+            token = '0';
+        }
+    </script>
+</head>
+<body onload="loadAll()">
+<div id=logPage>
+    <h1> Vítej na naší stránce </h1>
+    <div id="login"><h2>Prihlaseni</h2>
+        <br><input type="text" class="buttonInNav" id="nickname" value="Nickname"></br>
+        <br><input type="password" class="buttonInNav" id="password" value="Password"></br>
+        <br><input type="button" class="buttonInNav" onclick="logIn()" value="Prihlas se"></br>
+        <h3><input type="button" class="buttonInNav" onclick="loadRegisterPage()" value="Nejsem za registrovan "></h3>
+    </div>
+    <div id="rules">
+        <h1> O soutezi</h1>
+        <p> Blabalbal</p>
+    </div>
+</div>
+<div id="registerPage">
+    <h1>REGISTRACE</h1>
+    <br><input type="text" class="buttonInNav" id="nicknameR" value="Nickname"</br>
+    <br><input type="password" class="buttonInNav" id="passwordx" value="Password"></br>
+    <br><input type="password" class="buttonInNav" id="passwordy" value="Repeat password"></br>
+    <h3><input type="button" class="buttonInNav" onclick="registerNewUser()" value="Registrace"></h3>
+    <h3><input type="button" class="buttonInNav" onclick="loadLogPage()" value="Vratit se k prihlaseni"></h3>
+</div>
+<div id="container">
+    <div id="header">
+        <h1>Fakt bozi matematicka stranka</h1>
+    </div>
+    <div id="content">
+        <div id="nav">
+            <h1>Prihlasen <a id="userMainPage"></a></h1>
+            <br><input type="button" class="buttonInNav" onclick="loadMarketPage()" value="Market">
+            <br><input type="button" class="buttonInNav" onclick="loadQuestPage()" value="Ulohy">
+            <br><input type="button" class="buttonInNav" onclick="loadResultsPage()" value="Vysledovka">
+            <br><input type="button" class="buttonInNav" onclick="logOut()" value="Odhlasit se">
+        </div>
+        <div id="main">
+            <div id="market">
+                <h1> Market</h1>
+                <div id="mainMarketTable">
+                </div>
+            </div>
+            <div id="ulohy">
+                <h1> Ulohy</h1>
+                <div id="zadaniUloh">
+                </div>
+            </div>
+            <div id="poradi">
+                    <h1> Poradi</h1>
+                    <div id="poradiTable"></div>
+            </div>
+            <div id="pravidla">
+
+            </div>
+        </div>
+        <div id="footer"></div>
+    </div>
+</body>
+</html>
