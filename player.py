@@ -1,4 +1,5 @@
 import pymongo as pm
+import pprint as pp
 import secrets
 
 class Player:
@@ -10,7 +11,7 @@ class Player:
         self.__db = self.__client["database"]
         self.__users = self.__db["users"]
         self.name = name
-        if(self.__users.find( {"name" : self.name} )):
+        if(pp.pprint(self.__users.find( {"name" : self.name} ))):
             raise ValueError('Player already exists.')
             return
         self.passwd = passwd #hash!!
@@ -33,7 +34,8 @@ class Player:
             "sur2":     10
         }
         self.token = secrets.token_urlsafe(20)
-        add = self.__users.insert_one({"name": self.name, "passwd": self.passwd, "owns": self.owns, "buy": self.toBuy, "sell": self.toSell, "token": self.token})
+        add = self.__users.insert_one({"name": self.name, "passwd": self.passwd, "owns": self.owns, "buy": self.toBuy, "sell": self.toSell, "token": self.token}).inserted_id
+        return
         # add function to register, leave init only to create variable
 
     def buy(self):
