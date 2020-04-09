@@ -1,0 +1,50 @@
+#header {
+    background-color: aqua;
+}
+#container {
+    background-color: white;
+    width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+#content {
+    padding: 10px;
+    width: 900px;
+}
+#nav {
+    width: 180px;
+    float: left;
+}
+#main {
+    width: 710px;
+    float right;
+}
+#footer {
+    clear: both;
+}
+#logPage {
+    background-color: aqua;
+    width: 900px;
+    margin-right: auto;
+    margin-left: auto;
+}
+#login {
+    width: 180px;
+    padding: 10px;
+    float: left;
+}
+#rules {
+    width: 700px;
+    float: right;
+}
+#registerPage {
+    background-color: aqua;
+    width: 900px;
+    margin-right: auto;
+    margin-left: auto;
+}
+.buttonInNav {
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+}
