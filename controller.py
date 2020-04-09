@@ -23,5 +23,5 @@ def decode(path, body):
             res["token"]=pl.token
         except ValueError as e:
             res["code"]=0
-            res["msg"]=e.args
+            res["msg"]=e.args[0]
     return json.dumps(res)

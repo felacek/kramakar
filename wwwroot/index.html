@@ -131,14 +131,17 @@
           let body = {};
           body.name = document.getElementById("nickname").value;
           body.passwd = document.getElementById("passwordx").value;
+          let dat = JSON.stringify(body);
           //if (body.passw  document.getElementById("passwordy").value;
           let URL = HOST + '/registerNewUser';
-          $.post(URL,body, function (){
-              if (obj.kod == '0') {
-                  alert('ouvej zkus to znova')
+          $.post(URL, dat, function (res){
+              let obj = JSON.parse(res);
+              if (obj.code == 0) {
+                  alert('ouvej zkus to znova');
               } else {
-                  alert('jsi zaregistrovan')
+                  alert('jsi zaregistrovan');
               }
+              alert(obj.msg);
           } )
       }
 
