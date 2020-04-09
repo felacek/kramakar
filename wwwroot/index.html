@@ -1,30 +1,248 @@
-<!DOCTYPE html>
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
     <title>Bozi matematicka soutez</title>
-    <link rel="stylesheet" type="text/css" href="style.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
     <script>
-        user = "";
+        let user = "";
         let token = "";
         let objFetch = {};
+        let buy = {};
+        let sell = {};
         const HOST = window.location.protocol + "//" + window.location.hostname + ((window.location.port) ? ":" + window.location.port : "");
+        let owns = {sur3: 1000};
         let player = {name: "host", token: "1", owns: {obj: {id: 3, number: 1000, type: "factory"}}, buy: {}, sell: {}};
         //Zpet
         let backOnMainPage = '<br> <input type = "button" onclick = "loadMainPage()" value="Zpet na hlavni vyber ">';
-        // zobrazitelne stranky
-        // Registrace
-        // Funkce
+        let obk = {};
+        obk.coal = {id: '3', name: 'sur3', price: '10000000', buyable: false};
+
+        function reload() {
+            setInterval(function () {
+                    if (user !== "") {
+                        sendData()
+                    }
+                },
+                10000
+            )
+        };
 
         function loadAll() {
             loadLogPage();
+            reload();
+            loadMainTableMarket();
         }
 
-        function zmenObjednavku() {
-            console.log(document.getElementById('3').value);
-            document.getElementById('3divMainMarketTableNakup').innerHTML = document.getElementById('3').value;
+        function sendData (){
+            let body = {};
+            body.buy = buy;
+            body.sell = sell;
+            body.token = token;
+            let dat = JSON.stringify(body);
+            let URL = HOST + '/sendData';
+            $.post(URL, dat, function (res) {
+                owns = obj.owns 
+            });
+
         }
+
+        function zmenObjednavkuI(x) {
+            let nameOfSur = {};
+            for (o of Object.keys(obj)) {
+                let k = obj[o];
+                nameOfSur = k.name
+            }
+            zmenObjednavkuII(x, nameOfSur)
+        }
+
+        function zmenObjednavkuII(x, nameOfSur) {
+            if (document.getElementById(x).value > 0) {
+                buy[nameOfSur] = document.getElementById(x).value;
+                sell[nameOfSur] = 0
+            } else {
+                sell[nameOfSur] = document.getElementById(x).value;
+                buy[nameOfSur] = 0
+            }
+            let callById = x + `divMainMarketTableNakup`;
+            document.getElementById(callById).innerHTML = document.getElementById(x).value;
+            console.log(buy);
+            console.log(sell)
+        }
+
+        function loadMainTableMarket() {
+            console.log("nactenadata");
+            let s = `<table class = "paleBlueRows" style="width:100%"> <tr> <th> Surovina</th> <th> Cena na trhu </th> <th> Sklad </th> <th>Nakup</th> <th>Zmena nakupu</th> <th>Zmen</th></tr>`;
+            let obj = obk;
+            for (o of Object.keys(obj)) {
+                let k = obj[o];
+                s += `<tr> <th>` + k.name + `</a></span></th><th>` + k.price + `</th> <th><div>` + owns[k.name] + `</div></th> <th><div id ='` + k.id + `divMainMarketTableNakup` + `'></div></th> <th><input type = 'number' id ='` + k.id + `'></th><th><input type="button" onclick='zmenObjednavkuI(` + k.id + `)'></th></tr>`;
+            }
+            s += `</table>`;
+            document.getElementById("mainTableMarket").innerHTML = s
+        }
+
+
+        function loadLogPage() {
+            document.getElementById("logPage").style.display = "block";
+            document.getElementById("registerPage").style.display = "none";
+            document.getElementById("container").style.display = "none";
+        }
+
+        function logIn() {
+            let body = {};
+            body.name = document.getElementById("nickname").value;
+            body.passwd = document.getElementById("password").value;
+            if (body.name === "host") {
+                user = "host";
+                token = "host1"
+            } else {
+                document.getElementById("password").value = "";
+                let dat = JSON.stringify(body);
+                //if (body.passw  document.getElementById("passwordy").value;
+                let URL = HOST + '/registerNewUser';
+                $.post(URL, dat, function (res) {
+                    user = obj.name;
+                    token = obj.token;
+                    owns = obj.owns;
+                });
+            }
+            if (user !== "") {
+                loadMainPage()
+
+            } else {
+                alert("kamo, jsi vedle")
+            }
+
+        }
+
+
+        function loadRegisterPage() {
+            document.getElementById("registerPage").style.display = "block";
+            document.getElementById("logPage").style.display = "none";
+        }
+
+
+        function registerNewUser() {
+            objFetch = {};
+            let body = {};
+            body.name = document.getElementById("nicknameR").value;
+            body.passwd = document.getElementById("passwordx").value;
+            password = document.getElementById("passwordy").value;
+            if (body.passwor = password) {
+                let dat = JSON.stringify(body);
+                //if (body.passw  document.getElementById("passwordy").value;
+                let URL = HOST + '/registerNewUser';
+                $.post(URL, dat, function (res) {
+                    let obj = JSON.parse(res);
+                    if (obj.code == 0) {
+                        alert('ouvej zkus to znova');
+                    } else {
+                        alert('jsi zaregistrovan');
+                        user = obj.name;
+                        token = obj.token;
+                        owns = obj.owns;
+                        loadMainPage()
+                    }
+                    alert(obj.msg);
+                })
+            } else {
+                alert("zkus zadat stejne heslo, demente")
+            }
+        }
+
+        function loadMainPage() {
+            document.getElementById("container").style.display = "block";
+            document.getElementById("userMainPage").innerHTML = user;
+            document.getElementById("logPage").style.display = "none";
+            document.getElementById("ulohy").style.display = "none";
+            document.getElementById("pravidla").style.display = "none";
+            document.getElementById("market").style.display = "none";
+            document.getElementById("meme").style.display = "none";
+            document.getElementById("poradiB").style.display = "none";
+        }
+
+        function logOut() {
+            user = '';
+            let tokenSave = token;
+            token = '0';
+            loadLogPage();
+            alert("vrat se brzy");
+            let body = {};
+            body.token = tokenSave;
+            fetchPost(body, '/logout');
+            token = '0';
+        }
+
+        function loadPage(page) {
+            loadMainPage();
+            document.getElementById(page).style.display = "block"
+        }
+    </script>
+</head>
+<body onload="loadAll()">
+<div id=logPage>
+    <h1> Vítej na naší stránce </h1>
+    <div id="login"><h2>Prihlaseni</h2>
+        <br><input type="text" class="buttonInNav" id="nickname" value="Nickname"></br>
+        <br><input type="password" class="buttonInNav" id="password" value="Password"></br>
+        <br><input type="button" class="buttonInNav" onclick="logIn()" value="Prihlas se"></br>
+        <h3><input type="button" class="buttonInNav" onclick="loadRegisterPage()" value="Nejsem za registrovan "></h3>
+    </div>
+    <div id="rules">
+        <h1> O soutezi</h1>
+        <p> Blabalbal</p>
+    </div>
+</div>
+<div id="registerPage">
+    <h1>REGISTRACE</h1>
+    <br><input type="text" class="buttonInNav" id="nicknameR" value="Nickname"</br>
+    <br><input type="password" class="buttonInNav" id="passwordx" value="Password"></br>
+    <br><input type="password" class="buttonInNav" id="passwordy" value="Repeat password"></br>
+    <h3><input type="button" class="buttonInNav" onclick="registerNewUser()" value="Registrace"></h3>
+    <h3><input type="button" class="buttonInNav" onclick="loadLogPage()" value="Vratit se k prihlaseni"></h3>
+</div>
+<div id="container">
+    <div id="header">
+        <h1>Fakt bozi matematicka stranka</h1>
+    </div>
+    <div id="content">
+        <div id="nav">
+            <h1>Prihlasen <a id="userMainPage"></a></h1>
+            <br><input type="button" class="buttonInNav" onclick="loadPage('market')" value="Market">
+            <br><input type="button" class="buttonInNav" onclick="loadPage('ulohy')" value="Ulohy">
+            <br><input type="button" class="buttonInNav" onclick="loadPage('poradiB')" value="Vysledovka">
+            <br><input type="button" class="buttonInNav" onclick="loadPage('meme')" value="Fakt nudne">
+            <br><input type="button" class="buttonInNav" onclick="loadPage('pravidla')" value="Pravidla">
+            <br><input type="button" class="buttonInNav" onclick="logOut()" value="Odhlasit se">
+        </div>
+        <div id="main">
+            <div id="market" class="pageShow">
+                <h1> Market</h1>
+                <div id="mainTableMarket">
+                </div>
+            </div>
+            <div id="ulohy" class="pageShow">
+                <h1> Ulohy</h1>
+                <div id="zadaniUloh">
+                </div>
+            </div>
+            <div id="poradiB" class="pageShow">
+                <h1>Poradi</h1>
+            </div>
+            <div id="pravidla" class="pageShow">
+                <h1> Pravidla</h1>
+            </div>
+            <div id="meme" class="pageShow">
+                <h1>Bozi memicka</h1>
+            </div>
+
+        </div>
+        <div id="footer"></div>
+    </div>
+</div>
+</body>
+</html>
 
         function loadMainTableMarket() {
             //let obj = fetchPost (0,'/mainTableMarket');
