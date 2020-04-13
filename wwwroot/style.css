@@ -1,59 +1,151 @@
+body {
+    background-color: black;
+    color: white;
+}
 #header {
-    background-color: aqua;
+    background-color: black;
+    border-color: yellow;
+    border-style: dotted;
+    text-align: center;
+}
+#header:hover {
+    background-color: yellow;
+    border-color:  Black;
+    border-style: dotted;
+    text-align: center;
+    color: black;
 }
 #container {
-    background-color: white;
-    width: 1200px;
+    background-color: black;
+    width: 90%;
     margin-left: auto;
     margin-right: auto;
 }
 #content {
     padding: 10px;
-    width: 900px;
+    width: 90%;
 }
 #nav {
-    width: 180px;
+    width: 100px;
     float: left;
+    background-color: black;
+    color: white;
 }
 #main {
-    width: 710px;
+    width: 100%;
     float right;
 }
 #footer {
     clear: both;
 }
 #logPage {
-    background-color: aqua;
+    background-color: black;
     width: 900px;
     margin-right: auto;
     margin-left: auto;
 }
+.center {
+    border-color: yellow;
+    border-style: dotted;
+}
+.center:hover{
+    border-color: white;
+    border-style: dotted;
+    color: yellow;
+}
 #login {
     width: 180px;
-    padding: 10px;
     float: left;
+    text-align: center;
+    margin-bottom: 0em;
 }
 #rules {
     width: 700px;
     float: right;
 }
 #registerPage {
-    background-color: aqua;
-    width: 900px;
+    background-color: black;
+    width: 230px;
     margin-right: auto;
     margin-left: auto;
+    margin-top: auto;
 }
 .buttonInNav {
     width: 150px;
     margin-left: auto;
     margin-right: auto;
-    float: left;
+    left: 50%;
+    background-color: black;
+    color: white;
+    border-color: #FFFFFF;
+    border-style: dotted;
+    text-align: center;
+}
+.buttonInNav:hover{
+    width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 50%;
+    background-color: white;
+    color: black;
+    border-color: black;
+    border-style: dotted;
+    text-align: center;
+}
+.hI {
+    font-size: 2em;
+}
+.icon {
+    color: white;
+    height: 1em;
+    width: 1em;
 }
 .pageShow {
-    width: 500px;
+    width: 85%;
     float: right;
     margin-left: auto;
     margin-right: auto;
+    border-color: #FFFFFF;
+    border: dotted;
+}
+.aInNav {
+    width: 100px;
+    background-color: black;
+    color: white;
+    border-color: #FFFFFF;
+    border-style: dotted;
+    text-align: center
+}
+.aInNav:hover {
+    background-color: white;
+    color: black;
+    border-color: black;
+    border-style: dotted;
+    text-align: center;
+}
+#rulesContainter {
+}
+.tableButton {
+    width: 99%;
+    background-color: black;
+    color: white;
+}
+.tableButton:hover{
+    width: 99%;
+    background-color: white;
+    color: black;
+}
+.innerButton{
+    background-color: black;
+    color:white;
+    border-style: solid;
+    border-color: #FFFFFF;
+}
+.innerButton:hover {
+    background-color: white;
+    color:black;
+    border-style: solid;
+    border-color: black;
 }
 table.paleBlueRows {
     font-family: Georgia, serif;
@@ -71,10 +163,8 @@ table.paleBlueRows tbody td {
     font-size: 13px;
 }
 table.paleBlueRows tr:nth-child(even) {
-    background: #D0E4F5;
 }
 table.paleBlueRows thead {
-    background: #0B6FA4;
     border-bottom: 2px solid #FFFFFF;
 }
 table.paleBlueRows thead th {
@@ -91,10 +181,12 @@ table.paleBlueRows thead th:first-child {
 table.paleBlueRows tfoot {
     font-size: 14px;
     font-weight: bold;
-    color: #333333;
-    background: #D0E4F5;
+    color: white;
+    background: ;
     border-top: 3px solid #444444;
 }
 table.paleBlueRows tfoot td {
     font-size: 14px;
-}
+}.center {
+     text-align-last: center;
+ }
