@@ -2,7 +2,7 @@
 <html lang="cs">
 <head>
     <meta charset="UTF-8">
-    <title>Bozi matematicka soutez</title>
+    <title>KraMaKar - fakt boží matematická soutěž</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="style.css">
     <script>
@@ -38,7 +38,7 @@
             loadMainTableMarket();
         }
 
-        function sendData (){
+        function sendData() {
             let body = {};
             body.buy = buy;
             body.sell = sell;
@@ -46,7 +46,7 @@
             let dat = JSON.stringify(body);
             let URL = HOST + '/sendData';
             $.post(URL, dat, function (res) {
-                let obj =JSON.parse(res);
+                let obj = JSON.parse(res);
                 owns = obj.owns;
                 market = obj.market;
                 money = obj.money;
@@ -80,12 +80,12 @@
         }
 
         function loadMainTableMarket() {
-            console.log("nactenadata");
+            console.log("načtena data");
             let s = `<table class = "paleBlueRows" style="width:100%"> <tr> <th> Surovina</th> <th> Cena na trhu </th> <th> Sklad </th><th>Spotreba</th> <th>Nakup</th> <th>Zmena nakupu</th> <th>Zmen</th></tr>`;
             let obj = market;
             for (o of Object.keys(obj)) {
                 let k = obj[o];
-                s += `<tr> <th>` + k.name + `</a></span></th><th>` + k.price + `</th> <th><div>` + owns[k.name] + `</div></th> <th>Spotreba</th><th><div id ='` + k.id + `divMainMarketTableNakup` + `'></div></th> <th><input type = 'number' id ='` + k.id + `'></th><th><input type="button" onclick='zmenObjednavkuI(` + k.id + `)'></th></tr>`;
+                s += `<tr> <th>` + k.name + `</a></span></th><th>` + k.price + `</th> <th><div>` + owns[k.name] + `</div></th> <th>Spotreba</th><th><div id ='` + k.id + `divMainMarketTableNakup` + `'></div></th> <th><input class = "tableButton" type = 'number' id ='` + k.id + `'></th><th><a class="icon"><img src="https://img.icons8.com/color/48/000000/checkmark.png" class="icon" onclick='zmenObjednavkuI(` + k.id + `)'></a></th></tr>`;
             }
             s += `</table>`;
             document.getElementById("mainTableMarket").innerHTML = s
@@ -121,7 +121,7 @@
                 loadMainPage()
 
             } else {
-                alert("kamo, jsi vedle")
+                alert("kámo, jsi vedle")
             }
 
         }
@@ -146,9 +146,9 @@
                 $.post(URL, dat, function (res) {
                     let obj = JSON.parse(res);
                     if (obj.code == 0) {
-                        alert('ouvej zkus to znova');
+                        alert('ouvej zkus to znova :(');
                     } else {
-                        alert('jsi zaregistrovan');
+                        alert('jsi zaregistrován ;)');
                         user = obj.name;
                         token = obj.token;
                         owns = obj.owns;
@@ -157,7 +157,7 @@
                     alert(obj.msg);
                 })
             } else {
-                alert("zkus zadat stejne heslo, demente")
+                alert("zkus zadat stejné heslo, marňáku")
             }
         }
 
@@ -179,7 +179,7 @@
             let tokenSave = token;
             token = '0';
             loadLogPage();
-            alert("vrat se brzy");
+            alert("vrať se brzy");
             let body = {};
             body.token = tokenSave;
             fetchPost(body, '/logout');
@@ -189,19 +189,20 @@
             loadMainPage();
             document.getElementById(page).style.display = "block"
         }
-        function odevzdej (){
+
+        function odevzdej() {
             let body = {};
             body.id = document.getElementById("idUlohy").value;
             body.ansver = document.getElementById("ansverUlohy");
             body.token = token;
             let url = HOST + "/sentAnsvers";
             let dat = JSON.stringify(obj);
-            $.post(url, dat, function (res){
+            $.post(url, dat, function (res) {
                 let obj = JSON.parse(res);
-                if (obj.code == 0){
+                if (obj.code == 0) {
                     alert("neco se zkazilo")
                 }
-                alert (obj.msg)
+                alert(obj.msg)
 
             })
         }
@@ -209,25 +210,39 @@
 </head>
 <body onload="loadAll()">
 <div id=logPage>
-    <h1> Vítej na naší stránce </h1>
-    <div id="login"><h2>Prihlaseni</h2>
+    <h1 class="center"> KraMarKar - boží matematická soutěž </h1>
+    <div id="login">
+        <br><a class="hI">Přihlášni</a></br>
         <br><input type="text" class="buttonInNav" id="nickname" value="Nickname"></br>
         <br><input type="password" class="buttonInNav" id="password" value="Password"></br>
         <br><input type="button" class="buttonInNav" onclick="logIn()" value="Prihlas se"></br>
-        <h3><input type="button" class="buttonInNav" onclick="loadRegisterPage()" value="Nejsem za registrovan "></h3>
+        <h3><input type="button" class="buttonInNav" onclick="loadRegisterPage()" value="Nejsem za registrován"></h3>
     </div>
     <div id="rules">
-        <h1> O soutezi</h1>
-        <p> Blabalbal</p>
+        <h1> O souteži</h1>
+        <div id="rulesContainter">
+            <p> Nudíš se v karanténě, prošvihl jsi MaSo, chybí ti v matematických soutěžích špetka kapitalismu nebo si
+                jenom
+                chceš započítat?</p>
+            <p>KraMarKar je to po čem prahneš. V průběhu dvou hodin budeš řešit matematické úlohy,
+                za které dostaneš peníze, které budeš moci investovat do továren. Tyto fabriky ti vynesou ještě více
+                peněz.
+                Zapoj se do největší simulace trhu od roku 1929.</p>
+            <p> Ještě k tomu je to zadarmo a tvoje data určitě neprodáme.</p>
+        </div>
     </div>
 </div>
 <div id="registerPage">
-    <h1>REGISTRACE</h1>
-    <br><input type="text" class="buttonInNav" id="nicknameR" value="Nickname"</br>
-    <br><input type="password" class="buttonInNav" id="passwordx" value="Password"></br>
-    <br><input type="password" class="buttonInNav" id="passwordy" value="Repeat password"></br>
-    <h3><input type="button" class="buttonInNav" onclick="registerNewUser()" value="Registrace"></h3>
-    <h3><input type="button" class="buttonInNav" onclick="loadLogPage()" value="Vratit se k prihlaseni"></h3>
+    <h1 class="center">REGISTRACE</h1>
+    <div class="center">
+        <br><input type="text" class="buttonInNav" id="nicknameR" value="Nickname"</br>
+        <br>
+        <br><input type="password" class="buttonInNav" id="passwordx" value="Password"></br>
+        <br><input type="password" class="buttonInNav" id="passwordy" value="Repeat password"></br>
+        <br><input type="button" class="buttonInNav" onclick="registerNewUser()" value="Registrace"></br>
+        <br><input type="button" class="buttonInNav" onclick="loadLogPage()" value="Vratit se k prihlaseni"></br>
+        <br>
+    </div>
 </div>
 <div id="container">
     <div id="header">
@@ -235,43 +250,81 @@
     </div>
     <div id="content">
         <div id="nav">
-            <p>Prihlasen: <a id="userMainPage"></a>
-            <p>Penize: <a id="moneyShower"></a>
-            <p>Body: <a id="points"></a>
-            <br><input type="button" class="buttonInNav" onclick="loadPage('market')" value="Market">
-            <br><input type="button" class="buttonInNav" onclick="loadPage('ulohy')" value="Ulohy">
-            <br><input type="button" class="buttonInNav" onclick="loadPage('poradiB')" value="Vysledovka">
-            <br><input type="button" class="buttonInNav" onclick="loadPage('meme')" value="Fakt nudne">
-            <br><input type="button" class="buttonInNav" onclick="loadPage('pravidla')" value="Pravidla">
-            <br><input type="button" class="buttonInNav" onclick="logOut()" value="Odhlasit se">
+            <br>Přihlášen: <a id="userMainPage"></a>
+            <br>Peníze: <a id="moneyShower"></a>
+            <br>Body: <a id="points"></a>
+            <br><br><input type="button" class="aInNav" onclick="loadPage('market')" value="Market">
+            <br><br><input type="button" class="aInNav" onclick="loadPage('ulohy')" value="Úlohy">
+            <br> <br><input type="button" class="aInNav" onclick="loadPage('poradiB')" value="Výsledovka">
+            <br><br><input type="button" class="aInNav" onclick="loadPage('meme')" value="Fakt nudné">
+            <br><br><input type="button" class="aInNav" onclick="loadPage('pravidla')" value="Pravidla">
+            <br><br><input type="button" class="aInNav" onclick="logOut()" value="Odhlásit se">
         </div>
-        <div id="main">
-            <div id="market" class="pageShow">
-                <h1> Market</h1>
-                <div id="mainTableMarket">
-                </div>
-            </div>
-            <div id="ulohy" class="pageShow">
-                <h1> Ulohy</h1>
-                <div id="zadaniUloh">
-                </div>
-                <h3> Odevydej ulohu</h3>
-                Cislo ulohy<input type="number"  id="idUlohy"> Odpoved<input type="number" id="ansverUlohy"> <input type="button" onclick="odevzdej()" value = "odevzdej0">
-            </div>
-            <div id="poradiB" class="pageShow">
-                <h1>Poradi</h1>
-            </div>
-            <div id="pravidla" class="pageShow">
-                <h1> Pravidla</h1>
-            </div>
-            <div id="meme" class="pageShow">
-                <h1>Bozi memicka</h1>
-                <img src="5c5840e328e29.jpeg" >
-            </div>
-
-        </div>
-        <div id="footer"></div>
     </div>
+    <div id="main">
+        <div id="market" class="pageShow">
+            <h1> Market</h1>
+            <div id="mainTableMarket">
+            </div>
+        </div>
+        <div id="ulohy" class="pageShow">
+            <h1> Úlohy</h1>
+            <div id="zadaniUloh">
+            </div>
+            <h3> Odevzdej úlohu</h3>
+            Cislo ulohy<input type="number" id="idUlohy"> Odpoved<input type="number" id="ansverUlohy"> <input
+                type="button" onclick="odevzdej()" value="odevzdej" class="innerButton">
+        </div>
+        <div id="poradiB" class="pageShow">
+            <h1>Pořadí</h1>
+        </div>
+        <div id="pravidla" class="pageShow">
+            <h1> Pravidla</h1>
+            <h2>Snaha o jakýkoliv neoprávěný přístup je přísně zakázána</h2>
+            <p></p>
+            <p>
+            <h2> Jak vyhrát</h2></p>
+            <p> Vytězí hráč, který bude mít na konci hry nejvíce bodu.</p>
+            <p>
+            <h2> Jak získat body</h2></p>
+            <p>Body hráč může získat body dvěma cestami.
+                <br>1. Existují továrny, které je produkují
+                <br>2. Nakoupit je na trhu, na body se aplikují stejná pravidla pro změnu ceny, jako na ostatní
+                suroviny. Mějte však na paměti, že s body nelze obchodovat.
+            </p>
+            <p>
+            <h2> Jak získám peníze</h2></p>
+            <p> Peníze lze získat zase dvěma cestami
+                <br>1. Prodejem zboží na trhu
+                <br>2. Za správné odpovědi na úlohy
+            </p>
+            <p>
+            <h2> Jak funguje ekonomika</h2></p>
+            <p> Hráči staví továrny, ty produkují zboží, včetně bodů. Hráči spolu navzájem interagovat nemohou. Pokud je
+                nějaké zboží prodáno, je prodáno na obecný trh, z něho zase nakupují hráči zboží, které oni sami
+                potřebují. NENÍ MOŽNÉ ABY ZÁSOBA NĚJAKÉHO ZBOŽÍ DOŠLA, počítejte však, že cena může být velmi vysoká.
+            </p>
+            <p>
+            <h2>O úlohách</h2>
+            <p>
+            <p><br> K úlohám se dá dostat skrz záložku ÚLOHY. Za úlohy bude většinou dostávat peníze. Odměna bude vždy
+                přesně specifikována u dané úlohy. Za některé úlohy budete moci dostat vylepšení produkce vašich
+                továren. Některé úlohy bodou časově omezeny a/nebo jí bude moci vyřešit omezený počet hráčů a/nebo se
+                odměna za vyřešení bude snižovat. Všechny specifika úlohy budou zmíněny u dané úlohy.
+            </p>
+            <p>
+            <h2>Reklamace</h2>
+            <br> V případě problému nám dejte vědět.
+            </p>
+        </div>
+        <div id="meme" class="pageShow">
+            <h1>Bozi memicka</h1>
+            <img src="5c5840e328e29.jpeg">
+        </div>
+
+    </div>
+    <div id="footer"></div>
+</div>
 </div>
 </body>
 </html>
