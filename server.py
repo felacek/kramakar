@@ -8,7 +8,7 @@ import controller
 class Kramakar(BaseHTTPRequestHandler):
     def do_GET(self):
         self.send_response(200)
-        self.send_header("Content-type", "text/html")
+        self.send_header('Content-type', 'text/html')
         self.end_headers()
         with open("wwwroot/index.html") as index:
             for line in index:

@@ -3,8 +3,202 @@
 <head>
     <meta charset="UTF-8">
     <title>KraMaKar - fakt boží matematická soutěž</title>
+    <style>
+
+        body {
+            background-color: black;
+            color: white;
+        }
+        #header {
+            background-color: black;
+            border-color: yellow;
+            border-style: dotted;
+            text-align: center;
+        }
+        #header:hover {
+            background-color: yellow;
+            border-color:  Black;
+            border-style: dotted;
+            text-align: center;
+            color: black;
+        }
+        #container {
+            background-color: black;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #content {
+            padding: 10px;
+            width: 90%;
+        }
+        #nav {
+            width: 100px;
+            float: left;
+            background-color: black;
+            color: white;
+        }
+        #main {
+            width: 100%;
+            float right;
+        }
+        #footer {
+            clear: both;
+        }
+        #logPage {
+            background-color: black;
+            width: 900px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .center {
+            border-color: yellow;
+            border-style: dotted;
+        }
+        .center:hover{
+            border-color: white;
+            border-style: dotted;
+            color: yellow;
+        }
+        #login {
+            width: 180px;
+            float: left;
+            text-align: center;
+            margin-bottom: 0em;
+        }
+        #rules {
+            width: 700px;
+            float: right;
+        }
+        #registerPage {
+            background-color: black;
+            width: 230px;
+            margin-right: auto;
+            margin-left: auto;
+            margin-top: auto;
+        }
+        .buttonInNav {
+            width: 150px;
+            margin-left: auto;
+            margin-right: auto;
+            left: 50%;
+            background-color: black;
+            color: white;
+            border-color: #FFFFFF;
+            border-style: dotted;
+            text-align: center;
+        }
+        .buttonInNav:hover{
+            width: 150px;
+            margin-left: auto;
+            margin-right: auto;
+            left: 50%;
+            background-color: white;
+            color: black;
+            border-color: black;
+            border-style: dotted;
+            text-align: center;
+        }
+        .hI {
+            font-size: 2em;
+        }
+        .icon {
+            color: white;
+            height: 1em;
+            width: 1em;
+        }
+        .pageShow {
+            width: 85%;
+            float: right;
+            margin-left: auto;
+            margin-right: auto;
+            border-color: #FFFFFF;
+            border: dotted;
+        }
+        .aInNav {
+            width: 100px;
+            background-color: black;
+            color: white;
+            border-color: #FFFFFF;
+            border-style: dotted;
+            text-align: center
+        }
+        .aInNav:hover {
+            background-color: white;
+            color: black;
+            border-color: black;
+            border-style: dotted;
+            text-align: center;
+        }
+        #rulesContainter {
+        }
+        .tableButton {
+            width: 99%;
+            background-color: black;
+            color: white;
+        }
+        .tableButton:hover{
+            width: 99%;
+            background-color: white;
+            color: black;
+        }
+        .innerButton{
+            background-color: black;
+            color:white;
+            border-style: solid;
+            border-color: #FFFFFF;
+        }
+        .innerButton:hover {
+            background-color: white;
+            color:black;
+            border-style: solid;
+            border-color: black;
+        }
+        table.paleBlueRows {
+            font-family: Georgia, serif;
+            border: 1px solid #FFFFFF;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        table.paleBlueRows td, table.paleBlueRows th {
+            border: 3px solid #FFFFFF;
+            padding: 3px 2px;
+        }
+        table.paleBlueRows tbody td {
+            font-size: 13px;
+        }
+        table.paleBlueRows tr:nth-child(even) {
+        }
+        table.paleBlueRows thead {
+            border-bottom: 2px solid #FFFFFF;
+        }
+        table.paleBlueRows thead th {
+            font-size: 19px;
+            font-weight: bold;
+            color: #FFFFFF;
+            text-align: center;
+            border-left: 2px solid #FFFFFF;
+        }
+        table.paleBlueRows thead th:first-child {
+            border-left: none;
+        }
+        
+        table.paleBlueRows tfoot {
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+            background: ;
+            border-top: 3px solid #444444;
+        }
+        table.paleBlueRows tfoot td {
+            font-size: 14px;
+        }.center {
+             text-align-last: center;
+         }
+    </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="style.css">
     <script>
         let user = "";
         let token = "";
@@ -49,8 +243,8 @@
                 let obj = JSON.parse(res);
                 owns = obj.owns;
                 market = obj.market;
-                money = obj.money;
-                points = owns[points]
+                money = owns["money"];
+                points = owns["points"];
             });
 
         }
@@ -66,15 +260,15 @@
         }
 
         function zmenObjednavkuII(x, nameOfSur) {
-            if (document.getElementById(x).value > 0) {
-                buy[nameOfSur] = document.getElementById(x).value;
+            if ($("#x").val() > 0) {
+                buy[nameOfSur] = $("#x").val();
                 sell[nameOfSur] = 0
             } else {
-                sell[nameOfSur] = document.getElementById(x).value;
+                sell[nameOfSur] = $("#x").val();
                 buy[nameOfSur] = 0
             }
             let callById = x + `divMainMarketTableNakup`;
-            document.getElementById(callById).innerHTML = document.getElementById(x).value;
+            $("#callById").innerHTML = $("#x").val();
             console.log(buy);
             console.log(sell)
         }
@@ -88,28 +282,28 @@
                 s += `<tr> <th>` + k.name + `</a></span></th><th>` + k.price + `</th> <th><div>` + owns[k.name] + `</div></th> <th>Spotreba</th><th><div id ='` + k.id + `divMainMarketTableNakup` + `'></div></th> <th><input class = "tableButton" type = 'number' id ='` + k.id + `'></th><th><a class="icon"><img src="https://img.icons8.com/color/48/000000/checkmark.png" class="icon" onclick='zmenObjednavkuI(` + k.id + `)'></a></th></tr>`;
             }
             s += `</table>`;
-            document.getElementById("mainTableMarket").innerHTML = s
+            $("#mainTableMarket").innerHTML = s
         }
 
 
         function loadLogPage() {
-            document.getElementById("logPage").style.display = "block";
-            document.getElementById("registerPage").style.display = "none";
-            document.getElementById("container").style.display = "none";
+            $("#logPage").show();
+            $("#registerPage").hide();
+            $("#container").hide();
         }
 
         function logIn() {
             let body = {};
-            body.name = document.getElementById("nickname").value;
-            body.passwd = document.getElementById("password").value;
+            body.name = $("#nickname").val();
+            body.passwd = $("#password").val();
             if (body.name === "host") {
                 user = "host";
-                token = "host1"
+                token = "host1";
             } else {
-                document.getElementById("password").value = "";
+                $("#password").val() = "";
                 let dat = JSON.stringify(body);
-                //if (body.passw  document.getElementById("passwordy").value;
-                let URL = HOST + '/registerNewUser';
+                //if (body.passw  $("#passwordy").value;
+                let URL = HOST + '/logIn';
                 $.post(URL, dat, function (res) {
                     let obj = JSON.parse(res);
                     user = obj.name;
@@ -128,20 +322,20 @@
 
 
         function loadRegisterPage() {
-            document.getElementById("registerPage").style.display = "block";
-            document.getElementById("logPage").style.display = "none";
+            $("#registerPage").show();
+            $("#logPage").hide();
         }
 
 
         function registerNewUser() {
             objFetch = {};
             let body = {};
-            body.name = document.getElementById("nicknameR").value;
-            body.passwd = document.getElementById("passwordx").value;
-            password = document.getElementById("passwordy").value;
-            if (body.passwor = password) {
+            body.name = $("#nicknameR").val();
+            body.passwd = $("#passwordx").val();
+            password = $("#passwordy").val();
+            if (body.passwd == password) {
                 let dat = JSON.stringify(body);
-                //if (body.passw  document.getElementById("passwordy").value;
+                //if (body.passw  $("#passwordy").value;
                 let URL = HOST + '/registerNewUser';
                 $.post(URL, dat, function (res) {
                     let obj = JSON.parse(res);
@@ -157,21 +351,22 @@
                     alert(obj.msg);
                 })
             } else {
-                alert("zkus zadat stejné heslo, marňáku")
+                alert("různá hesla")
             }
         }
 
         function loadMainPage() {
-            document.getElementById("container").style.display = "block";
-            document.getElementById("userMainPage").innerHTML = user;
-            document.getElementById("points").innerHTML = points;
-            document.getElementById("moneyShower").innerHTML = money + '$';
-            document.getElementById("logPage").style.display = "none";
-            document.getElementById("ulohy").style.display = "none";
-            document.getElementById("pravidla").style.display = "none";
-            document.getElementById("market").style.display = "none";
-            document.getElementById("meme").style.display = "none";
-            document.getElementById("poradiB").style.display = "none";
+            $("#container").show();
+            $("#userMainPage").innerHTML = user;
+            $("#points").innerHTML = points;
+            $("#moneyShower").innerHTML = money + '$';
+            $("#registerPage").hide();
+            $("#logPage").hide();
+            $("#ulohy").hide();
+            $("#pravidla").hide();
+            $("#market").hide();
+            $("#meme").hide();
+            $("#poradiB").hide();
         }
 
         function logOut() {
@@ -187,13 +382,13 @@
 
         function loadPage(page) {
             loadMainPage();
-            document.getElementById(page).style.display = "block"
+            $("#page").show();
         }
 
         function odevzdej() {
             let body = {};
-            body.id = document.getElementById("idUlohy").value;
-            body.ansver = document.getElementById("ansverUlohy");
+            body.id = $("#idUlohy").val();
+            body.ansver = $("#ansverUlohy");
             body.token = token;
             let url = HOST + "/sentAnsvers";
             let dat = JSON.stringify(obj);
@@ -294,10 +489,9 @@
             </p>
             <p>
             <h2> Jak získám peníze</h2></p>
-            <p> Peníze lze získat zase dvěma cestami
-                <br>1. Prodejem zboží na trhu
-                <br>2. Za správné odpovědi na úlohy
-            </p>
+            <p> Peníze lze získat zase dvěma cestami </p><br>
+            <p> 1. Prodejem zboží na trhu </p><br>
+            <p> 2. Za správné odpovědi na úlohy </p>
             <p>
             <h2> Jak funguje ekonomika</h2></p>
             <p> Hráči staví továrny, ty produkují zboží, včetně bodů. Hráči spolu navzájem interagovat nemohou. Pokud je
