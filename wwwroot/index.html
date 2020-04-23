@@ -214,7 +214,6 @@
         //Zpet
         let backOnMainPage = '<br> <input type = "button" onclick = "loadMainPage()" value="Zpet na hlavni vyber ">';
         let market = {};
-        market.coal = {id: '3', name: 'sur3', price: '10000000', buyable: false};
 
         function reload() {
             setInterval(function () {
@@ -243,8 +242,6 @@
                 let obj = JSON.parse(res);
                 owns = obj.owns;
                 market = obj.market;
-                money = owns["money"];
-                points = owns["points"];
             });
 
         }
@@ -268,7 +265,7 @@
                 buy[nameOfSur] = 0
             }
             let callById = x + `divMainMarketTableNakup`;
-            $("#callById").innerHTML = $("#x").val();
+            $("#callById").html() = $("#x").val();
             console.log(buy);
             console.log(sell)
         }
@@ -282,7 +279,7 @@
                 s += `<tr> <th>` + k.name + `</a></span></th><th>` + k.price + `</th> <th><div>` + owns[k.name] + `</div></th> <th>Spotreba</th><th><div id ='` + k.id + `divMainMarketTableNakup` + `'></div></th> <th><input class = "tableButton" type = 'number' id ='` + k.id + `'></th><th><a class="icon"><img src="https://img.icons8.com/color/48/000000/checkmark.png" class="icon" onclick='zmenObjednavkuI(` + k.id + `)'></a></th></tr>`;
             }
             s += `</table>`;
-            $("#mainTableMarket").innerHTML = s
+            $("#mainTableMarket").html() = s
         }
 
 
@@ -357,9 +354,9 @@
 
         function loadMainPage() {
             $("#container").show();
-            $("#userMainPage").innerHTML = user;
-            $("#points").innerHTML = points;
-            $("#moneyShower").innerHTML = money + '$';
+            $("#userMainPage").html() = user;
+            $("#points").html() = points;
+            $("#moneyShower").html() = money + '$';
             $("#registerPage").hide();
             $("#logPage").hide();
             $("#ulohy").hide();

@@ -4,9 +4,7 @@ import player
 import reset
 
 def main():
-    reset.run()
-    data.run()
-    server.run('localhost', 8080)
+    server.run('kramakar', 80)
 
 if __name__ == '__main__':
     main()

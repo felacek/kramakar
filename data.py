@@ -1,9 +1,12 @@
 import pymongo as pm
+import urllib.parse as up
 
 def run():
-    hostName = 'localhost'
+    hostName = 'mongo_mongo_1'
     dbPort = 27017
-    client = pm.MongoClient("mongodb://%s:%s" % (hostName, dbPort))
+    un = up.quote_plus('root')
+    pa = up.quote_plus('example')
+    client = pm.MongoClient("mongodb://%s:%s@%s:%s" % (un, pa, hostName, dbPort))
     db = client["database"]
     users = db["users"]
     things = db["things"]

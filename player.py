@@ -2,13 +2,16 @@ import pymongo as pm
 import secrets
 import bcrypt
 import things
+import urllib.parse as up
 
 class Player:
 
     def __init__(self, name, passwd, token):
-        self.__hostName = 'localhost' 
-        self.__dbPort = 27017 
-        self.__client = pm.MongoClient("mongodb://%s:%s" % (self.__hostName, self.__dbPort))
+        hostName = 'mongo_mongo_1' 
+        dbPort = 27017
+        un = up.quote_plus('root')
+        pa = up.quote_plus('example')
+        self.__client = pm.MongoClient("mongodb://%s:%s@%s:%s" % (un, pa, hostName, dbPort))
         self.__db = self.__client["database"]
         self.__users = self.__db["users"]
         self.err = 0
@@ -20,7 +23,7 @@ class Player:
                 return
 
             self.name = name
-            self.__passwd = bcrypt.hashpw(passwd.encode("utf-8"), bcrypt.gensalt(12)) #hash!!
+            self.__passwd = bcrypt.hashpw(passwd, bcrypt.gensalt(12)) #hash!!
             self.owns = {
                 "money":    0,
                 "sur1":     0,
