@@ -1,4 +1,5 @@
 import player
+import problem
 import json
 from collections import namedtuple
 
@@ -46,5 +47,28 @@ def decode(path, body):
         except ValueError as e:
             res["code"]=0
             res["msg"]=e.args[0]
+    if(path == '/logOut'):
+        try:
+            pl = player.Player(None, None, data["token"])
+            pl.logout()
+            res["code"] = 1
+            res["msg"] = "Logout successful"
+        except ValueError as e:
+            res["code"] = 0
+            res["msg"] = e.args[0]
+    if(path == '/answer'):
+        try:
+            pr = problem.Problem(data["id"])
+            ch = pr.check(data["answer"])
+            res["msg"] = "Answer incorrect"
+            if (ch):
+                pl = player.Player(None, None, data["token"])
+                pl.owns["money"] += pr.worth
+                pl.update()
+                res["msg"] = "Answer correct"
+            res["code"] = 1
+        except ValueError as e:
+            res["code"] = 0
+            res["msg"] = e.args[0]
             
     return json.dumps(res)

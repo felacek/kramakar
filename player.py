@@ -73,6 +73,13 @@ class Player:
         self.toBuy = self.pl["buy"]
         self.toSell = self.pl["sell"]
 
+    def update(self):
+        self.__users.update_one({'name' : self.name}, {
+            '$set': {'owns': self.owns},
+            '$set': {'buy': self.toBuy},
+            '$set': {'token': self.token}
+        }, upsert = False)
+
     def buy(self):
         for x in self.toBuy:
             try:
@@ -93,7 +100,7 @@ class Player:
             except ValueError as e:
                 self.msg[self.err] = e.args[0]
                 self.err+= 1
-        update()
+        self.update()
 
     def sell(self):
         for x in self.toSell:
@@ -115,10 +122,8 @@ class Player:
             except ValueError as e:
                 self.msg[self.err] = e.args[0]
                 self.err+= 1
-        update()
+        self.update()
 
-    def update(self):
-        self.__users.update_one({'name' : self.name}, {
-            '$set': {'owns': self.owns},
-            '$set': {'buy': self.toBuy}
-        }, upsert = False)
+    def logout(self):
+        self.token = None
+        self.update()
