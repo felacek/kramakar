@@ -1,7 +1,7 @@
 import pymongo as pm
 import secrets
 import bcrypt
-import things
+import thing
 import urllib.parse as up
 
 class Player:
@@ -76,13 +76,14 @@ class Player:
     def buy(self):
         for x in self.toBuy:
             try:
-                thing = things.get(x)
-                if (thing.buyable):
-                    newmoney = self.owns["money"] - thing * self.toBuy[x]
+                item = thing.Thing(x)
+                if (item.buyable):
+                    newmoney = self.owns["money"] - item.price * self.toBuy[x]
                     if (newmoney >= 0):
                         self.owns["money"] = newmoney
                         self.owns[x] += self.toBuy[x]
                         self.toBuy[x] = 0
+                        item.repbought()
                     else:
                         self.msg[self.err] = ("Cannot buy %s, not enough money." % x)
                         self.err+= 1
@@ -92,20 +93,19 @@ class Player:
             except ValueError as e:
                 self.msg[self.err] = e.args[0]
                 self.err+= 1
-        self.pl["owns"] = self.owns
-        self.pl["buy"] = self.toBuy
-
+        update()
 
     def sell(self):
         for x in self.toSell:
             try:
-                thing = things.get(x)
-                if (thing.sellable):
+                item = thing.Thing(x)
+                if (item.sellable):
                     newamount = self.owns[x] - self.toSell[x]
                     if (newamount >=0):
-                        self.owns["money"] += thing.price * self.toSell[x]
+                        self.owns["money"] += item.price * self.toSell[x]
                         self.owns[x] = newamount
                         self.toSell[x] = 0
+                        item.repsold()
                     else:
                         self.msg[self.err] = ("Cannot sell %s, not enough resources." % x)
                         self.err+= 1
@@ -115,5 +115,10 @@ class Player:
             except ValueError as e:
                 self.msg[self.err] = e.args[0]
                 self.err+= 1
-        self.pl["owns"] = self.owns
-        self.pl["sell"] = self.toSell
+        update()
+
+    def update(self):
+        self.__users.update_one({'name' : self.name}, {
+            '$set': {'owns': self.owns},
+            '$set': {'buy': self.toBuy}
+        }, upsert = False)

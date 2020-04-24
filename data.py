@@ -15,12 +15,12 @@ def run():
     user = {"_id" : 0, "name": "default", "passwd": "", "owns": {}, "buy": {}, "sell": {}}
 
     thingsd = [
-        {"_id": 3, "name": "sur1", "price": 4, "static": False, "buyable": True, "sellable": True, "produces": None},
-        {"_id": 1, "name": "money", "price": 1, "static": True, "buyable": False, "sellable": False, "produces": None},
-        {"_id": 4, "name": "sur2", "price": 2, "static": False, "buyable": True, "sellable": True, "produces": None},
-        {"_id": 2, "name": "points", "price": 0, "static": True, "buyable": False, "sellable": False, "produces": None},
-        {"_id": 5, "name": "fab1", "price": 10, "static": False, "buyable": True, "sellable": False, "produces": 3},
-        {"_id": 6, "name": "fab2", "price": 20, "static": False, "buyable": True, "sellable": False, "produces": 4}
+        {"name": "sur1", "price": 4, "coef": 1.05, "buyable": True, "sellable": True, "produces": None},
+        {"name": "money", "price": 1, "coef": 1, "buyable": False, "sellable": False, "produces": None},
+        {"name": "sur2", "price": 2, "coef": 1.2, "buyable": True, "sellable": True, "produces": None},
+        {"name": "points", "price": 0, "coef": 1, "buyable": False, "sellable": False, "produces": None},
+        {"name": "fab1", "price": 10, "coef": 1.2, "buyable": True, "sellable": False, "produces": "sur1"},
+        {"name": "fab2", "price": 20, "coef": 1.3, "buyable": True, "sellable": False,"produces": "sur2"}
     ]
 
     u = users.insert_one(user)

@@ -1,7 +1,4 @@
 import server
-import data
-import player
-import reset
 
 def main():
     server.run('kramakar', 80)
